@@ -6,6 +6,7 @@ export class Filter extends Component {
 
     return (
       <label>
+        Find contacts
         <input type="text" name="filter" value={filter} onChange={onChange} />
       </label>
     );
