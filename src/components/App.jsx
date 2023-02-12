@@ -29,6 +29,12 @@ export class App extends Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   handleFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
@@ -63,7 +69,10 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.handleFilter} />
-        <ContactList contacts={this.getFilteredContacts()} />
+        <ContactList
+          contacts={this.getFilteredContacts()}
+          onClick={this.deleteContact}
+        />
       </div>
     );
   }
