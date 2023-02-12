@@ -8,9 +8,17 @@ export class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const { name } = this.state;
+    const { onSubmit, onCheck } = this.props;
 
-    this.props.onSubmit(this.state);
-    this.setState({ filter: '', name: '', number: '' });
+    const isContactsInclude = onCheck(name);
+    if (isContactsInclude) {
+      alert(`${name} is alredy in contacts.`);
+      return;
+    }
+
+    onSubmit(this.state);
+    this.setState({ name: '', number: '' });
   };
 
   handleInputChange = e => {

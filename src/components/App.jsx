@@ -23,6 +23,12 @@ export class App extends Component {
     });
   };
 
+  checkingContacts = name => {
+    return this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+  };
+
   handleFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
@@ -52,7 +58,10 @@ export class App extends Component {
         }}
       >
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
+        <ContactForm
+          onSubmit={this.addContact}
+          onCheck={this.checkingContacts}
+        />
 
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.handleFilter} />
