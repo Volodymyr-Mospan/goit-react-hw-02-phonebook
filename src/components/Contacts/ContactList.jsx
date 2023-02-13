@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Contact } from 'components/Contacts/';
 
 export const ContactList = ({ contacts, onClick }) => {
@@ -14,4 +15,9 @@ export const ContactList = ({ contacts, onClick }) => {
       ))}
     </ul>
   );
+};
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onClick: PropTypes.func.isRequired,
 };

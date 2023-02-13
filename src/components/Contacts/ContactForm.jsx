@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class ContactForm extends Component {
   state = {
@@ -10,8 +11,8 @@ export class ContactForm extends Component {
     e.preventDefault();
     const { name } = this.state;
     const { onSubmit, onCheck } = this.props;
-
     const isContactsInclude = onCheck(name);
+
     if (isContactsInclude) {
       alert(`${name} is alredy in contacts.`);
       return;
@@ -61,3 +62,8 @@ export class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onCheck: PropTypes.func.isRequired,
+};
