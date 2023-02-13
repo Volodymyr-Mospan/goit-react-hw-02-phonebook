@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import css from './Contacts.module.css';
 
 export class Contact extends Component {
   handleDeleteContact = e => {
@@ -10,9 +11,13 @@ export class Contact extends Component {
     const { contact } = this.props;
 
     return (
-      <li>
+      <li className={css.contacts__item}>
         {`${contact.name}: ${contact.number}`}{' '}
-        <button type="button" onClick={this.handleDeleteContact}>
+        <button
+          className={css.contacts__btn}
+          type="button"
+          onClick={this.handleDeleteContact}
+        >
           Delete
         </button>
       </li>

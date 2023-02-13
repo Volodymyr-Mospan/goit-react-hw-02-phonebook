@@ -61,18 +61,22 @@ export class App extends Component {
           color: '#010101',
         }}
       >
-        <h1>Phonebook</h1>
-        <ContactForm
-          onSubmit={this.addContact}
-          onCheck={this.checkingContacts}
-        />
+        <div className={'container'}>
+          <h1>Phonebook</h1>
+          <ContactForm
+            onSubmit={this.addContact}
+            onCheck={this.checkingContacts}
+          />
+        </div>
 
-        <h2>Contacts</h2>
-        <Filter filter={filter} onChange={this.handleFilter} />
-        <ContactList
-          contacts={this.getFilteredContacts()}
-          onClick={this.deleteContact}
-        />
+        <div className={'container'}>
+          <h2>Contacts</h2>
+          <Filter filter={filter} onChange={this.handleFilter} />
+          <ContactList
+            contacts={this.getFilteredContacts()}
+            onClick={this.deleteContact}
+          />
+        </div>
       </div>
     );
   }
