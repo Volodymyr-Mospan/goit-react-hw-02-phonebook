@@ -39,10 +39,11 @@ export const FormBtn = styled.button`
   width: 150px;
   margin-top: 20px;
   padding: 10px 25px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  cursor: pointer;
 `;
 
-export const FilterLabel = styled.label`
+export const FilterLabel = styled(Label)`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -76,4 +77,6 @@ export const ContactStyled = styled.li`
 export const ContactBtn = styled.button`
   margin-left: auto;
   padding: 5px 25px;
+  /* border-radius: 8px; */
+  cursor: pointer;
 `;
