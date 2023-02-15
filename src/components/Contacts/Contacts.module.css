@@ -14,14 +14,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  /* justify-content: space-between; */
 }
 
-.contactsForm__input {
+/* .contactsForm__input {
   padding: 10px 25px;
   border-radius: 10px;
-}
+} */
 
 .contactsForm__btn {
   width: 150px;

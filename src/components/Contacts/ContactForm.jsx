@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Formik, Form, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+import { Input } from 'components/Contacts/';
 import css from './Contacts.module.css';
 
-export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+// const initialValues = { name: '', number: '' };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const { name } = this.state;
+export class ContactForm extends Component {
+  // state = {
+  //   name: '',
+  //   number: '',
+  // };
+
+  initialValues = { name: '', number: '' };
+  schema = yup.object().shape({
+    name: yup
+      .string()
+      .matches(
+        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+        "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+      )
+      .required('It is required'),
+    number: yup.number().required('It is required').positive().integer(),
+  });
+
+  handleSubmit = (values, { resetForm }) => {
+    console.log(values);
     const { onSubmit, onCheck } = this.props;
-    const isContactsInclude = onCheck(name);
+    const isContactsInclude = onCheck(values.name);
 
     if (isContactsInclude) {
-      alert(`${name} is alredy in contacts.`);
+      alert(`${values.name} is alredy in contacts.`);
       return;
     }
 
-    onSubmit(this.state);
-    this.setState({ name: '', number: '' });
+    onSubmit(values);
+    resetForm();
   };
 
   handleInputChange = e => {
@@ -29,41 +45,39 @@ export class ContactForm extends Component {
   };
 
   render() {
-    const { name, number } = this.state;
+    // const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit} className={css.contactsForm}>
-        <label className={css.contactsForm__lable}>
-          Name
-          <input
-            className={css.contactsForm__input}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label className={css.contactsForm__lable}>
-          Number
-          <input
-            className={css.contactsForm__input}
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={this.handleInputChange}
-          />
-        </label>
+      <Formik
+        initialValues={this.initialValues}
+        validationSchema={this.schema}
+        onSubmit={this.handleSubmit}
+      >
+        <Form>
+          <label className={css.contactsForm__lable}>
+            Name
+            <Input
+              className={css.contactsForm__input}
+              type="text"
+              name="name"
+            />
+            <ErrorMessage name="name" component="p" />
+          </label>
+          <label className={css.contactsForm__lable}>
+            Number
+            <Input
+              className={css.contactsForm__input}
+              type="tel"
+              name="number"
+            />
+            <ErrorMessage name="number" component="p" />
+          </label>
 
-        <button type="submit" className={css.contactsForm__btn}>
-          Add contact
-        </button>
-      </form>
+          <button type="submit" className={css.contactsForm__btn}>
+            Add contact
+          </button>
+        </Form>
+      </Formik>
     );
   }
 }
