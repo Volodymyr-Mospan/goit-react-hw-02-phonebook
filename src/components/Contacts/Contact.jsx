@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './Contacts.module.css';
+import { ContactBtn } from 'components/Contacts/';
+
+// import css from './Contacts.module.css';
 
 export class Contact extends Component {
   handleDeleteContact = e => {
-    // console.log(this.props.contact.id);
     this.props.onClick(this.props.contact.id);
   };
   render() {
     const { contact } = this.props;
 
     return (
-      <li className={css.contacts__item}>
+      <>
         {`${contact.name}: ${contact.number}`}{' '}
-        <button
-          className={css.contacts__btn}
-          type="button"
-          onClick={this.handleDeleteContact}
-        >
+        <ContactBtn type="button" onClick={this.handleDeleteContact}>
           Delete
-        </button>
-      </li>
+        </ContactBtn>
+      </>
     );
   }
 }

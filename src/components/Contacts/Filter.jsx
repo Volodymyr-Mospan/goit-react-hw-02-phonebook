@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './Contacts.module.css';
+import { FilterLabel, FilterInput } from 'components/Contacts/';
+
+// import css from './Contacts.module.css';
 
 export class Filter extends Component {
   render() {
     const { filter, onChange } = this.props;
 
     return (
-      <label className={css.filter__lable}>
+      <FilterLabel>
         Find contacts by name
-        <input
-          className={css.filter__input}
+        <FilterInput
           type="text"
           name="filter"
           value={filter}
           onChange={onChange}
         />
-      </label>
+      </FilterLabel>
     );
   }
 }

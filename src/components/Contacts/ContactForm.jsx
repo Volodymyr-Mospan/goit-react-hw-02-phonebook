@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { Input } from 'components/Contacts/';
-import css from './Contacts.module.css';
-
-// const initialValues = { name: '', number: '' };
+import {
+  Input,
+  FormStyled,
+  Label,
+  ErrorMessageStyled,
+  FormBtn,
+} from 'components/Contacts/';
+// import css from './Contacts.module.css';
 
 export class ContactForm extends Component {
-  // state = {
-  //   name: '',
-  //   number: '',
-  // };
-
   initialValues = { name: '', number: '' };
   schema = yup.object().shape({
     name: yup
@@ -22,11 +21,17 @@ export class ContactForm extends Component {
         "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
       )
       .required('It is required'),
-    number: yup.number().required('It is required').positive().integer(),
+    number: yup
+      .number()
+      .required('It is required')
+      .positive()
+      .integer()
+      .typeError(
+        'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+      ),
   });
 
   handleSubmit = (values, { resetForm }) => {
-    console.log(values);
     const { onSubmit, onCheck } = this.props;
     const isContactsInclude = onCheck(values.name);
 
@@ -53,30 +58,20 @@ export class ContactForm extends Component {
         validationSchema={this.schema}
         onSubmit={this.handleSubmit}
       >
-        <Form>
-          <label className={css.contactsForm__lable}>
+        <FormStyled>
+          <Label>
             Name
-            <Input
-              className={css.contactsForm__input}
-              type="text"
-              name="name"
-            />
-            <ErrorMessage name="name" component="p" />
-          </label>
-          <label className={css.contactsForm__lable}>
+            <Input type="text" name="name" />
+            <ErrorMessage name="name" component={ErrorMessageStyled} />
+          </Label>
+          <Label>
             Number
-            <Input
-              className={css.contactsForm__input}
-              type="tel"
-              name="number"
-            />
-            <ErrorMessage name="number" component="p" />
-          </label>
+            <Input type="tel" name="number" />
+            <ErrorMessage name="number" component={ErrorMessageStyled} />
+          </Label>
 
-          <button type="submit" className={css.contactsForm__btn}>
-            Add contact
-          </button>
-        </Form>
+          <FormBtn type="submit">Add contact</FormBtn>
+        </FormStyled>
       </Formik>
     );
   }
